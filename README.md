@@ -31,8 +31,17 @@
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/automaton.git
+git clone https://github.com/MisterDr/automaton.git
 cd automaton
+pip install -r requirements.txt
+```
+#### MacOS
+```bash
+git clone https://github.com/MisterDr/automaton.git
+cd automaton
+brew install qt5
+brew link qt5 --force
+pip install -r requirements.txt
 ```
 
 ### Install Dependencies
