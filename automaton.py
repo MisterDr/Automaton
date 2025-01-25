@@ -23,6 +23,7 @@ import threading
 import traceback
 
 
+from helpersLib import KThread
 from mouseLib import recordMouseEvents, replayMouseEvents
 from screenLib import *
 
@@ -139,7 +140,6 @@ class AutoCompleteEditor(QPlainTextEdit):
         cursor.select(cursor.WordUnderCursor)
         cursor.insertText(item.text())
         self.popup.hide()
-
 
 class OutputStream(io.StringIO):
     """Custom output stream to redirect stdout/stderr."""
@@ -430,7 +430,7 @@ class MainWindow(QMainWindow):
 
         # Ensure only one script thread runs at a time
         if self.script_thread is None or not self.script_thread.is_alive():
-            self.script_thread = threading.Thread(target=script_execution, daemon=True)
+            self.script_thread = KThread(target=script_execution, daemon=True)
             self.script_thread.start()
             print("Script execution started.")
         else:
@@ -438,16 +438,19 @@ class MainWindow(QMainWindow):
 
     
     def stopScript(self):
-        """Stop the currently running script."""
-        if self.script_thread and self.script_thread.is_alive():
-            self.stop_thread_event.set()  # Signal the thread to stop
-            self.script_thread.join(timeout=1)
-            print("Script execution stopped.")
-            # Kill the thread if it's still running
-            if self.script_thread.is_alive():
-                self.script_thread.kill()
-        else:
-            print("No script is currently running.")
+        try:
+            """Stop the currently running script."""
+            if self.script_thread and self.script_thread.is_alive():
+                self.stop_thread_event.set()  # Signal the thread to stop
+                self.script_thread.join(timeout=1)
+                print("Script execution stopped.")
+                # Kill the thread if it's still running
+                if self.script_thread.is_alive():
+                    self.script_thread.kill()
+            else:
+                print("No script is currently running.")
+        except Exception as e:
+            print(f"Error stopping script: {e}")
 
 def main():
     app = QApplication(sys.argv)
