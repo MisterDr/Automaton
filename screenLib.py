@@ -158,3 +158,12 @@ def selectScreenRegion():
     root.destroy()
 
     return selected_region
+
+if __name__ == "__main__":
+    # Example: Capture a region of the screen and save it as an image
+    region = selectScreenRegion()
+    if region:
+        output_path = "captured_region.png"
+        captureScreenRegion(region, output_path)
+    else:
+        print("No region selected.")

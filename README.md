@@ -31,8 +31,17 @@
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/automaton.git
+git clone https://github.com/MisterDr/automaton.git
 cd automaton
+pip install -r requirements.txt
+```
+#### MacOS
+```bash
+git clone https://github.com/MisterDr/automaton.git
+cd automaton
+brew install qt5
+brew link qt5 --force
+pip install -r requirements.txt
 ```
 
 ### Install Dependencies
@@ -143,7 +152,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - Support drag-and-drop mouse actions.
 - Introduce custom hotkeys for automation features.
 - Provide a timeline editor for recorded events.
-- Add support for linux and macOS.
+- Add support for linux
 - Add more automation features and libraries.
 - Add plugin support for custom automation scripts.
 
